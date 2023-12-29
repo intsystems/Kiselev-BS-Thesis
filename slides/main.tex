@@ -1,192 +1,158 @@
-\documentclass[10pt,pdf,hyperref={unicode}]{beamer}
+\documentclass{beamer}
 
-\mode<presentation>
-{
-\usetheme{boxes}
-\beamertemplatenavigationsymbolsempty
+\input{preamble.tex}
+\createthesistitle
 
-\setbeamertemplate{footline}[page number]
-\setbeamersize{text margin left=0.5em, text margin right=0.5em}
-}
-
-\usepackage[utf8]{inputenc}
-\usepackage[english, russian]{babel}
-\usepackage{bm}
-\usepackage{multirow}
-\usepackage{ragged2e}
-\usepackage{indentfirst}
-\usepackage{multicol}
-\usepackage{subfig}
-\usepackage{amsmath,amssymb}
-\usepackage{enumerate}
-\usepackage{mathtools}
-\usepackage{comment}
-\usepackage{multicol}
-
-\usepackage[all]{xy}
-
-\usepackage{tikz}
-\usetikzlibrary{positioning,arrows}
-
-\tikzstyle{name} = [parameters]
-\definecolor{name}{rgb}{0.5,0.5,0.5}
-
-\usepackage{caption}
-\captionsetup{skip=0pt,belowskip=0pt}
-
-\newtheorem{rustheorem}{Теорема}
-\newtheorem{russtatement}{Утверждение}
-\newtheorem{rusdefinition}{Определение}
-
-% colors
-\definecolor{darkgreen}{rgb}{0.0, 0.2, 0.13}
-\definecolor{darkcyan}{rgb}{0.0, 0.55, 0.55}
-
-\AtBeginEnvironment{figure}{\setcounter{subfigure}{0}}
-
-\captionsetup[subfloat]{labelformat=empty}
-
-%----------------------------------------------------------------------------------------------------------
-
-\title[Пример слайдов по работе]{Пример слайдов по работе \\ курса}
-\author{И.\,О.\,Фамилия}
-
-\institute[]{Московский физико-технический институт}
-\date[2022]{\small 10\;февраля\;2022\,г.}
-
-%---------------------------------------------------------------------------------------------------------
 \begin{document}
 
-\begin{frame}
-\titlepage
+%=======
+\begin{frame}[noframenumbering,plain]
+	%\thispagestyle{empty}
+	\titlepage
 \end{frame}
-
-%----------------------------------------------------------------------------------------------------------
-\section{Слайд об исследованиях}
-\begin{frame}{Слайд об исследованиях}
-\bigskip
-Исследуется проблема \ldots.
-\begin{block}{Цель исследования~---}
-предложить метод \ldots.
-\end{block}
-\begin{block}{Требуется предложить}
-\justifying
-\begin{enumerate}[1)]
-\item метод \ldots,
-\item метод \ldots,
-\item метод \ldots.
-\end{enumerate}
-\end{block}
-\begin{block}{Решение}
-Для \ldots.
-\end{block}
+%=======
+\begin{frame}{Байесовский выбор достаточного размера выборки}
+    Исследуется задача выбора достаточного размера выборки.
+    \vfill
+    \begin{block}{Проблема}
+        Большинство подходов используют распределение параметров модели. Статистические методы требуют для оценки избыточный размер доступной выборки.
+    \end{block}
+    \vfill
+    \begin{block}{Цель}
+        Требуется предложить метод, не использующий напрямую параметры модели. Необходимо учесть недостаточный размер доступной выборки.
+    \end{block}
+    \vfill
+    \begin{block}{Решение}
+        Предлагается использовать функцию правдоподобия выборки. Рассматривается подход в случаях избыточного и недостаточного размеров доступной выборки. 
+    \end{block}
 \end{frame}
-
-%---------------------------------------------------------------------------------------------------------
-\section{Постановка задачи \ldots}
-\begin{frame}{Постановка задачи \ldots}
-Заданы
-\begin{enumerate}[1)]
-    \item признаки \ldots,
-    \item целевая переменная \ldots,
-    \item \ldots.
-\end{enumerate}
-
-\ldots
-
-\bigskip
-
-Требуется выбрать модель \ldots из множества
-\[
-	\mathfrak{G} = \left\{\mathbf{g}| \mathbf{g}:\mathbb{R}^{n} \to \mathbb{Y}^\prime\right\}.
-\]
-Оптимизационная задача \ldots:
-\[
-	\mathbf{g} = \arg\min_{\mathbf{g} \in \mathfrak{G}} \mathcal{L}\bigr(\ldots\bigr),
-\]
-где $\mathcal{L}$~--- функция ошибки.
-
-\bigskip
-\footnotetext[1]{\textit{Lopez-Paz D., Bottou L., Scholkopf B., Vapnik V.} Unifying distillation and privileged information // ICLR, 2016.}
-\footnotetext[2]{\textit{Hinton G., Vinyals O., Dean J.} Distilling the knowledge in a neural network // NIPS, 2015.}
+%=======
+\begin{frame}{Постановка задачи выбора размера выборки}
+    \begin{block}{Выборка}
+        \vspace{-0.3cm}
+        \[ \mathfrak{D}_m = \left\{ \bx_i, y_i \right\}_{i = 1}^{m}, \ \bx_i \in \mathbb{X}, \ y_i \in \mathbb{Y}. \]
+        \vspace{-0.7cm}
+    \end{block}
+    \begin{block}{Параметризация распределения}
+        \vspace{-0.3cm}
+        \[ p(y | \bx) \quad \longrightarrow \quad p(y | \bx, \bw), \ \bw \in \mathbb{W}. \]
+        \vspace{-0.7cm}
+    \end{block}
+    \begin{block}{Функция правдоподобия выборки}
+        \vspace{-0.5cm}
+        \[ L(\mathfrak{D}_m, \bw) = \prod_{i=1}^{m} p(y_i | \bx_i, \bw), \qquad l(\mathfrak{D}_m, \bw) = \sum\limits_{i=1}^{m} \log p(y_i | \bx_i, \bw). \]
+        \vspace{-0.5cm}
+    \end{block}
+    \begin{block}{Оценка максимального правдоподобия}
+        \vspace{-0.3cm}
+        \[ \hat{\bw}_{m} = \arg\max_{\bw} L(\mathfrak{D}_m, \bw). \]
+        \vspace{-0.7cm}
+    \end{block}
+    \begin{block}{Цель}
+        Требуется определить достаточный размер выборки $m^*$.
+    \end{block}
 \end{frame}
-
-%----------------------------------------------------------------------------------------------------------
-\section{Предложенный метод \ldots}
-\begin{frame}{Предложенный метод \ldots}
-~\\[-1mm]
-Заданы
-\begin{enumerate}[1)]
-	\item \ldots,
-	\item \ldots.
-\end{enumerate}
-
-\medskip
-Параметрические семейства:
-\[
-\setlength\abovedisplayskip{0pt}
-\mathfrak{F} = \left\{\mathbf{f}| \mathbf{f} = \text{softmax}\bigr(\mathbf{v}\bigr(\mathbf{x}\bigr)/T\bigr), \quad \mathbf{v}: \mathbb{R}^{n} \to \mathbb{R}^K \right\},
-\]
-\[
-\mathfrak{G} = \left\{\mathbf{g}| \mathbf{g} = \text{softmax}\bigr(\mathbf{z}\bigr(\mathbf{x}\bigr)/T\bigr), \quad \mathbf{z}: \mathbb{R}^n \to \mathbb{R}^K \right\},
-\]
-где~\ldots.
-
-\medskip
-Функция ошибки
-\[
-\setlength\abovedisplayskip{0pt}
-\begin{aligned}
-   \mathcal{L}\bigr(\mathbf{g}\bigr) = &-\sum_{i=1}^{m}\underbrace{{\sum_{k=1}^{K}y^k_i\log\mathbf{g}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=1}}}_{\text{исходная функция потерь}}- \sum_{i=1}^{m}\underbrace{{\sum_{k=1}^{K}\mathbf{f}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=T_0}\log\mathbf{g}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=T_0}}}_{\text{слагаемое дистилляции}},
-\end{aligned}
-\setlength\belowdisplayskip{0pt}
-\]
-где~\ldots.
-
-Оптимальная модель выбирается из класса,
-$\hat{\mathbf{g}} = \arg\min\limits_{\mathbf{g} \in \mathfrak{G}_{\text{cl}}} \mathcal{L}\bigr(\mathbf{g}\bigr).$
+%=======
+\begin{frame}{Достаточный размер выборки не превосходит доступный}
+    Рассмотрим выборку $\mathfrak{D}_k$ размера $k \leqslant m$. Оценим на ней параметры, используя метод максимума правдоподобия:
+    \[ \hat{\mathbf{w}}_{k} = \arg\max_{\mathbf{w}} L(\mathfrak{D}_k, \mathbf{w}). \]
+    Зафиксируем некоторое положительное число $\varepsilon > 0$.
+    \begin{rusdefinition}[D-достаточный размер выборки]
+        Размер выборки $m^*$ называется \textbf{D-достаточным}, если для любого $k \geqslant m^*$
+        \[ D(k) = \mathbb{D}_{\mathfrak{D}_k} L(\mathfrak{D}_m, \hat{\mathbf{w}}_{k}) \leqslant \varepsilon. \]
+    \end{rusdefinition}
+    \begin{rusdefinition}[M-достаточный размер выборки]
+        Размер выборки $m^*$ называется \textbf{M-достаточным}, если для любого $k \geqslant m^*$ 
+        \[ M(k) = \left| \mathbb{E}_{\mathfrak{D}_{k+1}} L(\mathfrak{D}_m, \hat{\mathbf{w}}_{k+1}) - \mathbb{E}_{\mathfrak{D}_k} L(\mathfrak{D}_m, \hat{\mathbf{w}}_{k}) \right| \leqslant \varepsilon. \]
+    \end{rusdefinition}
 \end{frame}
-
-%----------------------------------------------------------------------------------------------------------
-\section{Анализ предложенного метода \ldots}
-\begin{frame}{Анализ предложенного метода \ldots}
-\justifying
-
-На графике показана зависимость значения параметров$w_i$ в зависимости от параметра~$l_1$-регуляризации~$C$.
-\begin{figure}[h!]
-\includegraphics[width=0.45\textwidth]{../figures/log_reg_cs_exp.eps}
-\includegraphics[width=0.45\textwidth]{../figures/log_reg_cs_exp.eps}
-\end{figure}
-
-С увеличением параметра регуляризации~$C$ число ненулевых параметров~$w_i$ уменьшается.
-
+%=======
+\begin{frame}{Корректность M-определения}
+    \begin{block}{Утверждение 1 (асимптотическая нормальность)}
+        Пусть $\hat{\bw}_k$~--- оценка максимума правдоподобия $\bw$. Тогда при определенных условиях регулярности имеет место следующая сходимость по распределению:
+        \[ \hat{\bw}_k \xrightarrow{d} \mathcal{N}\left(\bw, \left[m\mathcal{I}(\bw)\right]^{-1}\right). \]
+    \end{block}
+    \begin{alertblock}{Лемма 1}
+        Пусть $\| \bm_k - \bw \|_2 \to 0$ и $\| \bSigma_k - \left[m\mathcal{I}(\bw)\right]^{-1} \|_{F} \to 0$ при $k \to \infty$. Тогда в модели линейной регрессии определение M-достаточного размера выборки является корректным. А именно, найдется такой $m^*$, что для всех $k \geqslant m^*$ выполнено $M(k) \leqslant \varepsilon$.
+    \end{alertblock}
 \end{frame}
-
-%----------------------------------------------------------------------------------------------------------
-\section{Выводы}
-\begin{frame}{Выводы}
-\justifying
-	\begin{enumerate}
-	\justifying
-	    \item Предложен \ldots.
-        \item Доказаны теоремы \ldots, 
-        \begin{itemize}
-            \item[---] \ldots,
-            \item[---] \ldots.
-        \end{itemize}
-        \item Предложен метод \ldots
-        \begin{itemize}
-            \item[---] \ldots,
-            \item[---] \ldots.
-        \end{itemize}
-        \item Предложены методы \ldots
-        \begin{itemize}
-            \item[---] \ldots,
-            \item[---] \ldots.
-        \end{itemize}
-        \item Предложена вероятностная интерпретации \ldots.
-	\end{enumerate}
+%=======
+\begin{frame}{Достаточный размер выборки больше доступного}
+    \begin{block}{}
+        Возникает задача прогнозирования математического ожидания и функции правдоподобия при $k > m$.
+    \end{block}
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=\textwidth]{paper/figures/image.pdf}
+        \label{image}
+    \end{figure}
 \end{frame}
-%----------------------------------------------------------------------------------------------------------
+%=======
+\begin{frame}{Синтетическая выборка при $m^* \leqslant m$}
+    \begin{center}
+        Линейная регрессия
+    \end{center}
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=\textwidth]{paper/figures/synthetic-regression-sufficient.pdf}
+        \label{synthetic-regression-sufficient}
+    \end{figure}
+    \vspace{-1cm}
+    \begin{center}
+        Логистическая регрессия
+    \end{center}
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=\textwidth]{paper/figures/synthetic-classification-sufficient.pdf}
+        \label{synthetic-classification-sufficient}
+    \end{figure}
+\end{frame}
+%=======
+\begin{frame}{Синтетическая выборка при $m^* > m$}
+    Для синтетических выборок проведена аппроксимация функций правдоподобия. Среднее значение и дисперсия аппроксимированы соответственно функциями
+    \[ \varphi(m) = a_1 - a_2^2 \exp\left( - a_3^2 m \right) - \dfrac{a_4^2}{m^{3/2}} \]
+    и
+    \[ \psi(m) = b_1^2 \exp\left( - b_2^2 m \right) + \dfrac{b_3^2}{m^{3/2}}, \]
+    где $\mathbf{a}$ и $\mathbf{b}$~--- вектора параметров.
+\end{frame}
+%=======
+\begin{frame}{Синтетическая выборка при $m^* > m$}
+    \begin{center}
+        Линейная регрессия
+    \end{center}
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=\textwidth]{paper/figures/synthetic-regression-approximation.pdf}
+        \label{synthetic-regression-approximation}
+    \end{figure}
+    \vspace{-1cm}
+    \begin{center}
+        Логистическая регрессия
+    \end{center}
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=\textwidth]{paper/figures/synthetic-classification-approximation.pdf}
+        \label{synthetic-classification-approximation}
+    \end{figure}
+\end{frame}
+%=======
+\begin{frame}{Дальнейшие цели}
+    \begin{itemize}
+        \item Доказать корректность предложенных определений.
+        \item Доказать <<хорошие>> свойства бутстрап-оценок математического ожидания и дисперсии функции правдоподобия выборки.
+        \item Улучшить подход к прогнозированию функции правдоподобия при $m^* > m$.
+    \end{itemize}
+\end{frame}
+%=======
+%\begin{frame}{Выносится на защиту}
+%    \begin{enumerate}
+%        \item Это первое...
+%        \vfill
+%        \item Это второе...
+%        \vfill
+%        \item Это третье...
+%    \end{enumerate}
+%\end{frame}
+%=======
 
 \end{document} 
