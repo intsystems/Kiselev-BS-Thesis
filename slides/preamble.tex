@@ -1,4 +1,4 @@
-%\usepackage[T2A]{fontenc}
+\usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
 \usepackage{graphicx, epsfig}
@@ -19,16 +19,12 @@
 \usetheme{default}%{Singapore}%{Warsaw}%{Warsaw}%{Darmstadt}
 \usecolortheme{default}
 
-% Теоремы
-\newtheorem{rustheorem}{Теорема}
-\newtheorem{russtatement}{Утверждение}
-\newtheorem{rusdefinition}{Определение}
-
 %\setbeamerfont{title}{size=\Huge}
 \setbeamertemplate{footline}[page number]{}
 
 \setbeamertemplate{section in toc}[sections numbered]
 
+\graphicspath{{../paper/figures/color/pdf}}
 
 \makeatletter
 \newcommand\HUGE{\@setfontsize\Huge{35}{40}}
@@ -38,7 +34,6 @@
 \beamertemplatenavigationsymbolsempty
 
 \input{paper/newcommands}
-\input{slides/title}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows,shapes,positioning,shadows,trees}

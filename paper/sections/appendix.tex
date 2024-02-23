@@ -1,6 +1,6 @@
-\section{Приложение}
+\section{Приложение}\label{append}
 
-\begin{proof}[Доказательство (Лемма \ref{lemma1})]
+\begin{proof}[Доказательство (Теорема \ref{theorem1})]
     Рассмотрим определение M-достаточного размера выборки в терминах логарифма функции правдоподобия. В модели линейной регрессии
     \[ L\left( \mathfrak{D}_m, \hat{\bw}_k \right) = p(\by | \bX, \hat{\bw}_k) = \prod_{i=1}^{m} p(y_i | \bx_i, \hat{\bw}_k) = \prod_{i=1}^{m} \mathcal{N}\left( y_i | \hat{\bw}_k\T \bx_i, \sigma^2 \right) = \]
     \[ = \left( 2\pi\sigma^2 \right)^{-m/2} \exp\left( -\dfrac{1}{2\sigma^2} \| \by - \bX \hat{\bw}_k \|_2^2 \right). \]
@@ -19,9 +19,82 @@
     Второе слагаемое оценим, используя неравенство Коши-Буняковского, свойство согласованности спектральной матричной нормы, а также ограниченность последовательности векторов $\bm_k$, которая следует из предъявленной в условии сходимости:
     \[ \big| (\bm_k - \bm_{k+1})\T \bX\T\bX (\bm_k + \bm_{k+1}) \big| \leqslant \| \bX (\bm_k - \bm_{k+1}) \|_2 \| \bX (\bm_k + \bm_{k+1}) \|_2 \leqslant \]
     \[ \leqslant \| \bX \|_2^2 \| \bm_k - \bm_{k+1} \|_2 \| \bm_k + \bm_{k+1} \|_2 \leqslant C \| \bX \|_2^2 \| \bm_k - \bm_{k+1} \|_2. \]
-    Последнее слагаемое оценим, используя суб-мультипликативность нормы Фробениуса:
+    Последнее слагаемое оценим, используя неравенство Гельдера для нормы Фробениуса:
     \[ \Big| \text{tr} \Big( \bX\T\bX \left( \bSigma_k - \bSigma_{k+1} \right) \Big) \Big| \leqslant \| \bX\T\bX \|_F \| \bSigma_k - \bSigma_{k+1} \|_F. \]
-    Наконец, из приведенных в условии сходимостей следует, что $\| \bm_k - \bm_{k+1} \|_2 \to 0$ и $\| \bSigma_k - \bSigma_{k+1} \|_{F} \to 0$ при $k \to \infty$. Таким образом, $M(k) \to 0$ при $k \to \infty$, что доказывает лемму.
-    
-    
+    Наконец, поскольку $\| \bm_k - \bm_{k+1} \|_2 \to 0$ и $\| \bSigma_k - \bSigma_{k+1} \|_{F} \to 0$ при $k \to \infty$, то $M(k) \to 0$ при $k \to \infty$, что доказывает теорему.
+\end{proof}
+
+\begin{proof}[Доказательство (Следствие)]
+    Из приведенных в условии сходимостей следует, что $\| \bm_k - \bm_{k+1} \|_2 \to 0$ и $\| \bSigma_k - \bSigma_{k+1} \|_{F} \to 0$ при $k \to \infty$. Применение Теоремы \ref{theorem1} заканчивает доказательство.
+\end{proof}
+
+\begin{proof}[Доказательство (Теорема \ref{theorem2})]
+    Дивергенция Кульбака-Лейблера для пары нормальных апостериорных распределений имеет вид
+    \[ D_{\text{KL}}\left( p_k \| p_{k+1} \right) = \dfrac{1}{2} \left( \mathrm{tr}\left( \mathbf{\Sigma}_{k+1}^{-1} \mathbf{\Sigma}_k \right) + (\mathbf{m}_{k+1} - \mathbf{m}_k)\T \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) - n + \log{\left( \dfrac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} \right). \]
+    Представим $\bSigma_{k+1}$ как $\bSigma_{k+1} = \bSigma_k + \Delta \bSigma$. Рассмотрим в отдельности каждое слагаемое.
+    \[ \mathrm{tr}\left( \mathbf{\Sigma}_{k+1}^{-1} \mathbf{\Sigma}_k \right) = \mathrm{tr}\left( \left( \mathbf{\Sigma}_k + \Delta \bSigma \right)^{-1} \mathbf{\Sigma}_k \right) \to \mathrm{tr} \mathbf{I}_n= n \text{ при } \| \Delta \bSigma \|_F \to 0, \]
+    \[ \left| (\mathbf{m}_{k+1} - \mathbf{m}_k)\T \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right| \leqslant \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2^2 \| \mathbf{\Sigma}_{k+1}^{-1} \|_2 \to 0 \text{ при } \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 \to 0, \]
+    \[ \log{\left( \dfrac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} = \log{\left( \dfrac{\det \left( \mathbf{\Sigma}_k + \Delta \bSigma \right)}{\det \mathbf{\Sigma}_{k}} \right)} \to \log \det \mathbf{I}_n = \log 1 = 0 \text{ при } \| \Delta \bSigma \|_F \to 0, \]
+    откуда и имеем требуемое.
+\end{proof}
+
+\begin{proof}[Доказательство (Теорема \ref{theorem3})]
+    Воспользуемся выражением s-score для пары нормальных априорных распределений из \cite{Aduenko2017}:
+    \[ \text{s-score}(p_k, p_{k+1}) = \exp{\left( -\dfrac{1}{2} (\mathbf{m}_{k+1} - \mathbf{m}_k)\T \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right)}. \]
+    Поскольку
+    \[ \left| (\mathbf{m}_{k+1} - \mathbf{m}_k)\T \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right| \leqslant \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2^2 \| \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} \|_2 \to 0 \]
+    при $\| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 \to 0$, то значение квадратичной формы внутри экспоненты стремится к нулю. Следовательно, $\text{s-score}(p_k, p_{k+1}) \to 1$ при $\| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 \to 0$.
+\end{proof}
+
+\begin{proof}[Доказательство (Теорема \ref{theorem4})]
+    Пусть задано нормальное априорное распределение параметров $p(\bw) = \mathcal{N}\left( \bw | \mathbf{0}, \alpha^{-1} \bI \right)$. В модели линейной регрессии правдоподобие является нормальным, а именно
+    \[ p(\by | \bX, \bw) = \mathcal{N}\left( \by | \bX \bw, \sigma^2 \mathbf{I} \right) = \left( 2\pi\sigma^2 \right)^{-m/2} \exp\left( -\dfrac{1}{2\sigma^2} \| \by - \bX \bw \|_2^2 \right). \]
+    Используя сопряженность априорного распределения и правдоподобия, легко найти параметры апостериорного распределения:
+    \[ p(\bw | \bX, \by) = \mathcal{N}\left( \bw | \bm, \bSigma \right), \]
+    где
+    \[ \bSigma = \left( \alpha \bI + \dfrac{1}{\sigma^2} \bX\T \bX \right)^{-1}, \qquad \bm = \left( \bX\T \bX + \alpha \sigma^2 \bI \right)^{-1} \bX\T \by. \]
+    Рассмотрим выражение $\| \bSigma_{k+1} - \bSigma_k \|_2$ нормы разности матриц ковариции для подвыборок размера $k$ и $k+1$. Введем обозначение $\bA_k = \dfrac{1}{\sigma^2} \bX\T_k \bX_k$. Учитывая формулы выше, имеем
+    \[ \| \bSigma_{k+1} - \bSigma_k \|_2 = \left\| \left( \alpha \bI + \bA_{k+1} \right)^{-1} - \left( \alpha \bI + \bA_k \right)^{-1} \right\|_2 = \]
+    \[ = \left\| \left( \alpha \bI + \bA_{k+1} \right)^{-1} \left( \bA_{k+1} - \bA_k \right) \left( \alpha \bI + \bA_k \right)^{-1} \right\|_2 \leqslant \]
+    Воспользуемся субмультипликативностью спектральной матричной нормы.
+    \[ \leqslant \left\| \left( \alpha \bI + \bA_{k+1} \right)^{-1} \right\|_2 \left\| \left( \alpha \bI + \bA_k \right)^{-1} \right\|_2 \left\| \bA_{k+1} - \bA_k \right\|_2 = \]
+    Теперь воспользуемся выражением спектральной матричной нормы через максимальное собственное значение.
+    \[ = \dfrac{1}{\lambda_{\min}\left( \alpha \bI + \bA_{k+1} \right)} \dfrac{1}{\lambda_{\min}\left( \alpha \bI + \bA_k \right)} \left\| \bA_{k+1} - \bA_k \right\|_2 \leqslant \]
+    \[ \leqslant \dfrac{1}{\lambda_{\min}\left( \bA_{k+1} \right)} \dfrac{1}{\lambda_{\min}\left( \bA_k \right)} \left\| \bA_{k+1} - \bA_k \right\|_2 = \]
+    \[ = \sigma^2  \dfrac{1}{\lambda_{\min}\left( \bX\T_{k+1} \bX_{k+1} \right)} \dfrac{1}{\lambda_{\min}\left( \bX\T_k \bX_k \right)} \left\| \bX\T_{k+1} \bX_{k+1} - \bX\T_k \bX_k \right\|_2. \]
+    Далее, поскольку по условию $\| \bx \|_2 \leqslant M$, то
+    \[ \left\| \bX\T_{k+1} \bX_{k+1} - \bX\T_k \bX_k \right\|_2 = \left\| \sum\limits_{i=1}^{k+1} \bx_i \bx_i\T - \sum\limits_{i=1}^{k} \bx_i \bx_i\T \right\|_2 = \left\| \bx_{k+1} \bx_{k+1}\T \right\|_2 = \lambda_{\max}\left( \bx_{k+1} \bx_{k+1}\T \right) = \]
+    Матрица единичного ранга имеет единственное ненулевое собственное значение.
+    \[ = \bx_{k+1}\T \bx_{k+1} = \| \bx_{k+1} \|_2^2 \leqslant M^2. \]
+    По условию $\lambda_{\min}\left( \bX\T_k \bX_k \right) = \omega(\sqrt{k})$, тогда $\| \bSigma_{k+1} - \bSigma_k \|_2 = o(k^{-1})$ при $k \to \infty$. Далее воспользуемся эквивалентностью матричных норм, а именно
+    \[ \| \bSigma_{k+1} - \bSigma_k \|_F \leqslant \sqrt{k} \| \bSigma_{k+1} - \bSigma_k \|_2 = o(k^{-1/2}) \text{ при } k \to \infty, \]
+    что и требовалось доказать. Теперь оценим норму разности математических ожиданий.
+    \[ \| \bm_{k+1} - \bm_k \|_2 = \left\| \left( \bX_{k+1}\T \bX_{k+1} + \alpha \sigma^2 \bI \right)^{-1} \bX_{k+1}\T \by_{k+1} - \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bX_k\T \by_k \right\|_2 = \]
+    Учтем, что $\bX_{k+1}\T = [\bX_k\T, \bx_{k+1}]$ и $\by_{k+1} = [\by_k, y_{k+1}]\T$, тогда $\bX_{k+1}\T \bX_{k+1} = \bX_k\T \bX_k + \bx_{k+1} \bx_{k+1}\T$ и $\bX_{k+1}\T \by_{k+1} = \bX_k\T \by_k + \bx_{k+1} y_{k+1}$.
+    \[ = \left\| \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI + \bx_{k+1} \bx_{k+1}\T \right)^{-1} \left( \bX_k\T \by_k + \bx_{k+1} y_{k+1} \right) - \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bX_k\T \by_k \right\|_2 = \]
+    Вынесем множитель в первом слагаемом:
+    \[ \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI + \bx_{k+1} \bx_{k+1}\T \right)^{-1} = \left( \bI + \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} \bx_{k+1}\T \right)^{-1} \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1}.\]
+    Далее вынесем общий множитель у обоих слагаемых.
+    \begin{multline*}
+        = \Bigg\| \left[ \left( \bI + \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} \bx_{k+1}\T \right)^{-1} - \bI \right] \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bX_k\T \by_k + \\ + \left( \bX_{k+1}\T \bX_{k+1} + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} y_{k+1} \Bigg\|_2 =
+    \end{multline*}
+    Воспользуемся неравенством треугольника, а также свойством согласованности и субмультипликативности спектральной нормы.
+    \begin{multline*}
+        \leqslant \left\| \left( \bI + \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} \bx_{k+1}\T \right)^{-1} - \bI \right\|_2 \left\| \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \right\|_2 \left\| \bX_k\T \by_k \right\|_2 + \\ + \left\| \left( \bX_{k+1}\T \bX_{k+1} + \alpha \sigma^2 \bI \right)^{-1} \right\|_2 \left\| \bx_{k+1} y_{k+1} \right\|_2
+    \end{multline*}
+    Оценим по отдельности каждое слагаемое. В первом множителе первого слагаемого применим формулу для разности обратных матриц, как мы делали с ковариационными матрицами.
+    \[ \left\| \left( \bI + \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} \bx_{k+1}\T \right)^{-1} - \bI \right\|_2 \leqslant \]
+    \[ \leqslant \left\| \left( \bI + \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} \bx_{k+1}\T \right)^{-1} \right\|_2 \cdot \left\| \bI \right\|_2 \cdot \left\| \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} \bx_{k+1}\T \right\|_2 \leqslant \]
+    Снова используем субмультипликативность, а также выражение для нормы матрицы единичного ранга.
+    \[ \leqslant \dfrac{1}{\lambda_{\min}\left( \bI + \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} \bx_{k+1}\T \right)} \dfrac{\left\| \bx_{k+1} \right\|_2^2}{\lambda_{\min}\left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)} \leqslant \]
+    \[ \leqslant \dfrac{1}{1 + \lambda_{\min}\left(\left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} \bx_{k+1}\T \right)} \dfrac{M^2}{\lambda_{\min}\left( \bX_k\T \bX_k \right)} \leqslant \]
+    Минимальное собственное значение произведения матриц оценивается произведением их минимальных собственных значений. Кроме того, минимальное собственное значение матрицы единичного ранга $\bx_{k+1} \bx_{k+1}\T$ равно нулю.
+    \[ \leqslant \dfrac{1}{1 + \lambda_{\max}\left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right) \lambda_{\min}\left( \bx_{k+1} \bx_{k+1}\T \right)} \dfrac{M^2}{\lambda_{\min}\left( \bX_k\T \bX_k \right)} = \dfrac{M^2}{\lambda_{\min}\left( \bX_k\T \bX_k \right)}. \]
+    Второй и третий множители первого слагаемого оцениваются следующим образом.
+    \[ \left\| \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \right\|_2 \left\| \bX_k\T \by_k \right\|_2 \leqslant \dfrac{\left\| \bX_k\T \by_k \right\|_2}{\lambda_{\min}\left( \bX_k\T \bX_k \right)} = \dfrac{\left\| \sum\limits_{i=1}^{k} \bx_i y_i \right\|_2}{\lambda_{\min}\left( \bX_k\T \bX_k \right)} \leqslant \dfrac{k M^2}{\lambda_{\min}\left( \bX_k\T \bX_k \right)} \]
+    Наконец, оценим второе слагаемое.
+    \[ \left\| \left( \bX_{k+1}\T \bX_{k+1} + \alpha \sigma^2 \bI \right)^{-1} \right\|_2 \left\| \bx_{k+1} y_{k+1} \right\|_2 \leqslant \dfrac{M^2}{\lambda_{\min}\left( \bX_{k+1}\T \bX_{k+1} \right)} \]
+    Итого, имеем следующую оценку.
+    \[ \| \bm_{k+1} - \bm_k \|_2 \leqslant \dfrac{k M^3}{\lambda_{\min}^2\left( \bX_k\T \bX_k \right)} + \dfrac{M^2}{\lambda_{\min}\left( \bX_{k+1}\T \bX_{k+1} \right)} = k \cdot o(k^{-1}) + o(k^{-1/2}) = o(1) \text{ при } k \to \infty \]
+    Таким образом, получили требуемую сходимость.
 \end{proof}
