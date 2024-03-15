@@ -1,41 +1,45 @@
-\documentclass[a4paper, 12pt]{article}
+\documentclass[14pt]{extarticle}
 
 \input{preamble}
 \input{newcommands}
 
-\title{Байесовский подход к выбору достаточного размера выборки}
-
-\author{
-    Киселев Никита \\
-	\texttt{kiselev.ns@phystech.edu} \\
-	\And
-	Грабовой Андрей \\
-	\texttt{grabovoy.av@phystech.edu} \\
-}
-
-\date{\today}
-
 \begin{document}
 
-%%% Название
-\maketitle
+%%% Титульный лист
+\input{sections/title}
+\setcounter{page}{2}
 
 %%% Аннотация
+\newpage
 \input{sections/abstract}
 
+%%% Оглавление
+\newpage
+\tableofcontents
+
 %%% Введение
+\newpage
 \input{sections/introduction}
 
 %%% Основная часть
+\newpage
 \input{sections/section1}
+
+\newpage
 \input{sections/section2}
+
+\newpage
 \input{sections/section3}
+
+\newpage
 \input{sections/section4}
 
 %%% Заключение
+\newpage
 \input{sections/conclusion}
 
 %%% Список литературы
+\newpage
 \bibliographystyle{unsrtnat}
 \bibliography{references}
 
