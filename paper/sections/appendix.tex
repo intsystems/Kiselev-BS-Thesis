@@ -30,20 +30,23 @@
 
 \begin{proof}[Доказательство (Теорема \ref{theorem2})]
     Дивергенция Кульбака-Лейблера для пары нормальных апостериорных распределений имеет вид
-    \[ D_{\text{KL}}\left( p_k \| p_{k+1} \right) = \dfrac{1}{2} \left( \mathrm{tr}\left( \mathbf{\Sigma}_{k+1}^{-1} \mathbf{\Sigma}_k \right) + (\mathbf{m}_{k+1} - \mathbf{m}_k)\T \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) - n + \log{\left( \dfrac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} \right). \]
+    \[ D_{\text{KL}}\left( p_k \| p_{k+1} \right) = \dfrac{1}{2} \Big( \mathrm{tr}\left( \mathbf{\Sigma}_{k+1}^{-1} \mathbf{\Sigma}_k \right) + (\mathbf{m}_{k+1} - \mathbf{m}_k)\T \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) - \]
+    \[ - n + \log{\left( \dfrac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} \Big). \]
     Представим $\bSigma_{k+1}$ как $\bSigma_{k+1} = \bSigma_k + \Delta \bSigma$. Рассмотрим в отдельности каждое слагаемое.
     \[ \mathrm{tr}\left( \mathbf{\Sigma}_{k+1}^{-1} \mathbf{\Sigma}_k \right) = \mathrm{tr}\left( \left( \mathbf{\Sigma}_k + \Delta \bSigma \right)^{-1} \mathbf{\Sigma}_k \right) \to \mathrm{tr} \mathbf{I}_n= n \text{ при } \| \Delta \bSigma \|_F \to 0, \]
-    \[ \left| (\mathbf{m}_{k+1} - \mathbf{m}_k)\T \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right| \leqslant \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2^2 \| \mathbf{\Sigma}_{k+1}^{-1} \|_2 \to 0 \text{ при } \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 \to 0, \]
-    \[ \log{\left( \dfrac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} = \log{\left( \dfrac{\det \left( \mathbf{\Sigma}_k + \Delta \bSigma \right)}{\det \mathbf{\Sigma}_{k}} \right)} \to \log \det \mathbf{I}_n = \log 1 = 0 \text{ при } \| \Delta \bSigma \|_F \to 0, \]
-    откуда и имеем требуемое.
+    \[ \left| (\mathbf{m}_{k+1} - \mathbf{m}_k)\T \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right| \leqslant \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2^2 \| \mathbf{\Sigma}_{k+1}^{-1} \|_2 \to 0 \] 
+    при $ \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 \to 0$,
+    \[ \log{\left( \dfrac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} = \log{\left( \dfrac{\det \left( \mathbf{\Sigma}_k + \Delta \bSigma \right)}{\det \mathbf{\Sigma}_{k}} \right)} \to \log \det \mathbf{I}_n = \log 1 = 0 \]
+    при $ \Delta \bSigma \|_F \to 0$, откуда и имеем требуемое.
 \end{proof}
 
 \begin{proof}[Доказательство (Теорема \ref{theorem3})]
     Воспользуемся выражением s-score для пары нормальных априорных распределений из \cite{Aduenko2017}:
     \[ \text{s-score}(p_k, p_{k+1}) = \exp{\left( -\dfrac{1}{2} (\mathbf{m}_{k+1} - \mathbf{m}_k)\T \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right)}. \]
     Поскольку
-    \[ \left| (\mathbf{m}_{k+1} - \mathbf{m}_k)\T \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right| \leqslant \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2^2 \| \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} \|_2 \to 0 \]
-    при $\| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 \to 0$, то значение квадратичной формы внутри экспоненты стремится к нулю. Следовательно, $\text{s-score}(p_k, p_{k+1}) \to 1$ при $\| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 \to 0$.
+    \[ \left| (\mathbf{m}_{k+1} - \mathbf{m}_k)\T \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right| \leqslant \]
+    \[ \leqslant \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2^2 \| \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} \|_2 \to 0 \]
+    при $\| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 \to 0$, то значение квадратичной формы внутри экспоненты стремится к нулю. Следовательно, $\text{s-score}(p_k, p_{k+1}) \to 1$ при устремлении $\| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 \to 0$.
 \end{proof}
 
 \begin{proof}[Доказательство (Теорема \ref{theorem4})]
@@ -63,9 +66,9 @@
     \[ \leqslant \dfrac{1}{\lambda_{\min}\left( \bA_{k+1} \right)} \dfrac{1}{\lambda_{\min}\left( \bA_k \right)} \left\| \bA_{k+1} - \bA_k \right\|_2 = \]
     \[ = \sigma^2  \dfrac{1}{\lambda_{\min}\left( \bX\T_{k+1} \bX_{k+1} \right)} \dfrac{1}{\lambda_{\min}\left( \bX\T_k \bX_k \right)} \left\| \bX\T_{k+1} \bX_{k+1} - \bX\T_k \bX_k \right\|_2. \]
     Далее, поскольку по условию $\| \bx \|_2 \leqslant M$, то
-    \[ \left\| \bX\T_{k+1} \bX_{k+1} - \bX\T_k \bX_k \right\|_2 = \left\| \sum\limits_{i=1}^{k+1} \bx_i \bx_i\T - \sum\limits_{i=1}^{k} \bx_i \bx_i\T \right\|_2 = \left\| \bx_{k+1} \bx_{k+1}\T \right\|_2 = \lambda_{\max}\left( \bx_{k+1} \bx_{k+1}\T \right) = \]
+    \[ \left\| \bX\T_{k+1} \bX_{k+1} - \bX\T_k \bX_k \right\|_2 = \left\| \sum\limits_{i=1}^{k+1} \bx_i \bx_i\T - \sum\limits_{i=1}^{k} \bx_i \bx_i\T \right\|_2 = \left\| \bx_{k+1} \bx_{k+1}\T \right\|_2 = \]
     Матрица единичного ранга имеет единственное ненулевое собственное значение.
-    \[ = \bx_{k+1}\T \bx_{k+1} = \| \bx_{k+1} \|_2^2 \leqslant M^2. \]
+    \[ = \lambda_{\max}\left( \bx_{k+1} \bx_{k+1}\T \right)  = \bx_{k+1}\T \bx_{k+1} = \| \bx_{k+1} \|_2^2 \leqslant M^2. \]
     По условию $\lambda_{\min}\left( \bX\T_k \bX_k \right) = \omega(\sqrt{k})$, тогда $\| \bSigma_{k+1} - \bSigma_k \|_2 = o(k^{-1})$ при $k \to \infty$. Далее воспользуемся эквивалентностью матричных норм, а именно
     \[ \| \bSigma_{k+1} - \bSigma_k \|_F \leqslant \sqrt{k} \| \bSigma_{k+1} - \bSigma_k \|_2 = o(k^{-1/2}) \text{ при } k \to \infty, \]
     что и требовалось доказать. Теперь оценим норму разности математических ожиданий.
@@ -73,7 +76,8 @@
     Учтем, что $\bX_{k+1}\T = [\bX_k\T, \bx_{k+1}]$ и $\by_{k+1} = [\by_k, y_{k+1}]\T$, тогда $\bX_{k+1}\T \bX_{k+1} = \bX_k\T \bX_k + \bx_{k+1} \bx_{k+1}\T$ и $\bX_{k+1}\T \by_{k+1} = \bX_k\T \by_k + \bx_{k+1} y_{k+1}$.
     \[ = \left\| \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI + \bx_{k+1} \bx_{k+1}\T \right)^{-1} \left( \bX_k\T \by_k + \bx_{k+1} y_{k+1} \right) - \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bX_k\T \by_k \right\|_2 = \]
     Вынесем множитель в первом слагаемом:
-    \[ \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI + \bx_{k+1} \bx_{k+1}\T \right)^{-1} = \left( \bI + \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} \bx_{k+1}\T \right)^{-1} \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1}.\]
+    \[ \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI + \bx_{k+1} \bx_{k+1}\T \right)^{-1} = \left( \bI + \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} \bx_{k+1}\T \right)^{-1} \cdot \] 
+    \[ \cdot \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1}.\]
     Далее вынесем общий множитель у обоих слагаемых.
     \begin{multline*}
         = \Bigg\| \left[ \left( \bI + \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} \bx_{k+1}\T \right)^{-1} - \bI \right] \left( \bX_k\T \bX_k + \alpha \sigma^2 \bI \right)^{-1} \bX_k\T \by_k + \\ + \left( \bX_{k+1}\T \bX_{k+1} + \alpha \sigma^2 \bI \right)^{-1} \bx_{k+1} y_{k+1} \Bigg\|_2 =
@@ -95,6 +99,29 @@
     Наконец, оценим второе слагаемое.
     \[ \left\| \left( \bX_{k+1}\T \bX_{k+1} + \alpha \sigma^2 \bI \right)^{-1} \right\|_2 \left\| \bx_{k+1} y_{k+1} \right\|_2 \leqslant \dfrac{M^2}{\lambda_{\min}\left( \bX_{k+1}\T \bX_{k+1} \right)} \]
     Итого, имеем следующую оценку.
-    \[ \| \bm_{k+1} - \bm_k \|_2 \leqslant \dfrac{k M^3}{\lambda_{\min}^2\left( \bX_k\T \bX_k \right)} + \dfrac{M^2}{\lambda_{\min}\left( \bX_{k+1}\T \bX_{k+1} \right)} = k \cdot o(k^{-1}) + o(k^{-1/2}) = o(1) \text{ при } k \to \infty \]
-    Таким образом, получили требуемую сходимость.
+    \[ \| \bm_{k+1} - \bm_k \|_2 \leqslant \dfrac{k M^3}{\lambda_{\min}^2\left( \bX_k\T \bX_k \right)} + \dfrac{M^2}{\lambda_{\min}\left( \bX_{k+1}\T \bX_{k+1} \right)} = k \cdot o(k^{-1}) + o(k^{-1/2}) = o(1) \]
+    при $k \to \infty$. Таким образом, получили требуемую сходимость.
+\end{proof}
+
+\begin{proof}[Доказательство (Теорема \ref{theorem5})]
+    Задано нормальное априорное распределение параметров $p(\bw) = \mathcal{N}\left( \bw | \mathbf{0}, \alpha^{-1} \bI \right)$. Для модели линейной регрессии 
+    \[ p(\by | \bX, \bw) = \mathcal{N}\left( \by | \bX \bw, \sigma^2 \mathbf{I} \right) = \left( 2\pi\sigma^2 \right)^{-m/2} \exp\left( -\dfrac{1}{2\sigma^2} \| \by - \bX \bw \|_2^2 \right). \]
+    Апостериорное распределение параметров:
+    \[ p(\bw | \bX, \by) = \mathcal{N}\left( \bw | \bm, \bSigma \right), \]
+    где
+    \[ \bSigma = \left( \alpha \bI + \dfrac{1}{\sigma^2} \bX\T \bX \right)^{-1}, \qquad \bm = \left( \bX\T \bX + \alpha \sigma^2 \bI \right)^{-1} \bX\T \by. \]
+    Полный байесовский прогноз для одиночной модели выражается по формуле
+    \[ p(\mathbf{y}_{\text{test}}|\mathbf{X_{\text{test}}}, \mathbf{X}_k, \mathbf{y}_k) = \int p(\mathbf{y}_{\text{test}}|\mathbf{X_{\text{test}}}, \mathbf{w}) p(\mathbf{w}|\mathbf{X}_k, \mathbf{y}_k) d\mathbf{w} = \]
+    \[ = \int \mathcal{N}\left( \mathbf{y}_{\text{test}} | \mathbf{X}_{\text{test}}\mathbf{w}, \sigma^2 \mathbf{I} \right) \mathcal{N}\left( \mathbf{w} | \mathbf{m}_k, \boldsymbol{\Sigma}_k \right) d\mathbf{w}. \]
+    Полученный интеграл несложно вычислить, например, как в \cite{pml1Book}:
+    \[ = \mathcal{N}\left( \mathbf{y}_{\text{test}} | \mathbf{X}_{\text{test}} \mathbf{m}_k, \sigma^2 \mathbf{I} + \mathbf{X}_{\text{test}} \boldsymbol{\Sigma}_k \mathbf{X}_{\text{test}}\T \right). \]
+    В условиях настоящей теоремы справедливы результаты Теоремы~\ref{theorem4}. Следовательно, $\| \bm_{k+1} - \bm_k \|_2 \to 0$ и $\| \bSigma_{k+1} - \bSigma_k \|_2 \to 0$ при $k \to \infty$. Далее, остается показать сходимость матожидания и ковариационной матрицы нормального распределения прогноза модели. Для математического ожидания при $k \to \infty$ выполнено
+    \[ \| \bX_{\text{test}} \bm_{k+1} - \bX_{\text{test}} \bm_{k} \|_2 \leqslant \| \bX_{\text{test}} \|_2 \| \bm_{k+1} - \bm_k \|_2 \to 0. \]
+    Для ковариационной матрицы при $k \to \infty$ справедливо следующее:
+    \[ \| \sigma^2 \bI + \bX_{\text{test}} \bSigma_{k+1} \bX_{\text{test}}\T - \sigma^2 \bI - \bX_{\text{test}} \bSigma_{k} \bX_{\text{test}}\T \|_F \leqslant \]
+    Пользуясь субмультипликативностью нормы Фробениуса,
+    \[ \leqslant \| \bX_{\text{test}} \|_F^2 \| \bSigma_{k+1} - \bSigma_{k} \|_F \to 0. \]
+    Далее, имея сходимость матожидания и ковариационной матрицы, действуем аналогично доказательству Теоремы~\ref{theorem2} и получаем, что
+    \[ D_{\mathrm{KL}}\left(p(\mathbf{y}_{\mathrm{test}}|\mathbf{X_{\mathrm{test}}}, \mathbf{X}_k, \mathbf{y}_k) \| p(\mathbf{y}_{\mathrm{test}}|\mathbf{X_{\mathrm{test}}}, \mathbf{X}_{k+1}, \mathbf{y}_{k+1})\right) \to 0  \]
+    при $k \to \infty$.
 \end{proof}
