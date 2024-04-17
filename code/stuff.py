@@ -244,7 +244,8 @@ def sufficient_vs_threshold(sample_sizes: np.ndarray,
     return sufficient
     
     
-def get_regression_results(eps: float, 
+def get_regression_results(eps_1: float, 
+                           eps_2: float,
                            num_sample_size: int = 50,
                            datasets=None,
                            datasets_names=None,
@@ -264,25 +265,25 @@ def get_regression_results(eps: float,
         else:
             sample_sizes = np.linspace(X.shape[1]+1, X.shape[0], num_sample_size, dtype=int)
         
-        d_sufficient = sufficient_sample_size(sample_sizes=sample_sizes[::-1],
+        d_sufficient = sufficient_sample_size(sample_sizes=sample_sizes,
                                                 variances=variances_datasets[name][::-1],
-                                                eps=eps,
+                                                eps=eps_1,
                                                 method='variance')
         
-        m_sufficient = sufficient_sample_size(sample_sizes=sample_sizes[::-1],
+        m_sufficient = sufficient_sample_size(sample_sizes=sample_sizes,
                                                 means=means_datasets[name][::-1],
-                                                eps=eps,
+                                                eps=eps_1,
                                                 method='rate')
         
         kl_sufficient = sufficient_sample_size(sample_sizes=sample_sizes,
                                                 divergences=divergences_datasets[name],
                                                 scores=scores_datasets[name],
-                                                eps=eps,
+                                                eps=eps_2,
                                                 method='kl-div')
         s_sufficient = sufficient_sample_size(sample_sizes=sample_sizes,
                                                 divergences=divergences_datasets[name],
                                                 scores=scores_datasets[name],
-                                                eps=eps,
+                                                eps=eps_2,
                                                 method='s-score')
         table.add_row([name, d_sufficient, m_sufficient, kl_sufficient, s_sufficient])
     
