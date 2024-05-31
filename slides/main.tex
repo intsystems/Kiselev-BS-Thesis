@@ -7,19 +7,19 @@
 \usefonttheme[onlymath]{serif}
 
 %%%
-\title{Байесовский подход к определению достаточного размера выборки}
+\title{Байесовский подход к выбору оптимального размера выборки}
 \subtitle{\textcolor{black!50}{Выпускная квалификационная работа бакалавра}}
-\author{
-    Киселев Никита Сергеевич\\
-    Научный руководитель: А.\,В.\,Грабовой
+\author[Н.\,С.~Киселев]{
+    Никита Сергеевич Киселев\\
+    Научный руководитель: к.ф.-м.н. А.\,В.~Грабовой
 }
-\date{\today}
 \institute[МФТИ (НИУ)]{
-    Московский физико-технический институт\\
-    (национальный исследовательский университет)\\
-    Физтех-школа прикладной математики и информатики\\
-    Кафедра интеллектуальных систем
-}
+\small{
+    Кафедра интеллектуальных систем ФПМИ МФТИ\\
+    Специализация: Интеллектуальный анализ данных\\
+    Направление: 03.03.01 Прикладные математика и физика
+}}
+\date{2024}
 %%%
 
 \begin{document}
@@ -138,7 +138,7 @@
 
 \begin{frame}{Близость апостериорных распределений на схожих подвыборках}
     \begin{figure}
-        \includesvg[width=0.9\textwidth]{posterior}
+        \includesvg[width=0.9\textwidth]{posterior_ru}
     \end{figure}
     \begin{block}{Определение (\alert{KL}-достаточный размер выборки)}
         \[ \forall k \geqslant m^*: \alert{KL}(k) = D_{KL}(p_k \| p_{k+1}) = \int p_k(\bw) \log{\dfrac{p_k(\bw)}{p_{k+1}(\bw)}} d\bw \leqslant \varepsilon \]
@@ -223,7 +223,7 @@
     \vspace{-0.3cm}
     \scriptsize
     \begin{table}
-        \begin{tabular}{ccccccc}
+        \begin{tabular}{ccc|cc|cc}
         \toprule
         Название выборки & Объектов $m$ & Признаков $n$ & D & M & KL & S \\
         \midrule
@@ -266,7 +266,7 @@
 \begin{frame}[noframenumbering,plain]{Список работ автора по теме диплома}
     \begin{block}{Публикации ВАК}
         \begin{enumerate}
-            \item \textit{\textbf{N. Kiselev}, A. Grabovoy.} Sample Size Determination: Posterior Distributions Proximity // Journal of Computational and Applied Mathematics (на рецензировании).
+            \item \textit{\textbf{N. Kiselev}, A. Grabovoy.} Sample Size Determination: Posterior Distributions Proximity // Computational Management Science (на рецензировании).
         \end{enumerate}
     \end{block}
     \begin{block}{Выступления с докладом}
