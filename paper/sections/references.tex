@@ -3,6 +3,10 @@
 %\hypersetup{ urlcolor=black }               % Ссылки делаем чёрными
 %\providecommand*{\BibDash}{}                % В стилях ugost2008 отключаем использование тире как разделителя 
 \urlstyle{rm}                               % ссылки URL обычным шрифтом
-\bibliographystyle{unsrtnat}
+%\bibliographystyle{unsrtnat}
+\bibliographystyle{utf8gost71u.bst}
+\makeatletter
+\renewcommand{\@biblabel}[1]{#1.}   % Заменяем библиографию с квадратных скобок на точку
+\makeatother
 \bibliography{references}
 \urlstyle{tt}                               % возвращаем установки шрифта ссылок URL

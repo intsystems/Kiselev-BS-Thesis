@@ -1,45 +1,66 @@
-\documentclass[aspectratio=169]{beamer}
-\input{preamble}
+\documentclass{beamer}
+% Inputs
 \input{newcommands}
-\addbibresource{../paper/references.bib}
 \graphicspath{{figs}}
 
+\beamertemplatenavigationsymbolsempty
+\usecolortheme{beaver}
+\setbeamertemplate{blocks}[rounded=true, shadow=true]
+\setbeamertemplate{footline}[page number]
 \usefonttheme[onlymath]{serif}
+%
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amssymb,amsfonts,amsmath,mathtext}
+\usepackage{subfig}
+\usepackage[all]{xy} % xy package for diagrams
+\usepackage{array}
+\usepackage{multicol}% many columns in slide
+\usepackage{hyperref}% urls
+\usepackage{hhline}%tables
+\usepackage{multicol}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{biblatex}
+\addbibresource{../paper/references.bib}
 
-%%%
-\title{Байесовский подход к выбору оптимального размера выборки}
-\subtitle{\textcolor{black!50}{Выпускная квалификационная работа бакалавра}}
-\author[Н.\,С.~Киселев]{
-    Никита Сергеевич Киселев\\
-    Научный руководитель: к.ф.-м.н. А.\,В.~Грабовой
+% Your figures are here:
+\graphicspath{ {figs} }
+
+% Beamer margin
+\setbeamersize
+{
+    text margin left=0.5cm,
+    text margin right=0.5cm
 }
-\institute[МФТИ (НИУ)]{
-\small{
-    Кафедра интеллектуальных систем ФПМИ МФТИ\\
-    Специализация: Интеллектуальный анализ данных\\
-    Направление: 03.03.01 Прикладные математика и физика
-}}
+
+%----------------------------------------------------------------------------------------------------------
+\title[\hbox to 56mm{Байесовский подход к выбору оптимального размера выборки}]{Байесовский подход к выбору оптимального размера выборки}
+\author[Н.\,С.~Киселев]{Никита Сергеевич Киселев\\
+\small{Научный руководитель: к.ф.-м.н. А.\,В.~Грабовой}}
+\institute{Кафедра интеллектуальных систем ФПМИ МФТИ\\
+Специализация: Интеллектуальный анализ данных\\
+Направление: 03.03.01 Прикладные математика и физика}
 \date{2024}
-%%%
 
 \begin{document}
 
+\begin{frame}
+\thispagestyle{empty}
 \maketitle
+\end{frame}
 
 \begin{frame}{Байесовский подход к определению достаточного размера выборки}
     Исследуется задача определения достаточного размера выборки.
     \begin{block}{Проблема}
-        \vspace{-0.15cm}
         Определение достаточного размера выборки без постановки статистической гипотезы о распределении параметров модели.
     \end{block}
     \begin{block}{Цель}
-        \vspace{-0.15cm}
         Предложить критерий определения достаточного размера выборки. Построить метод, реализующий этот критерий на практике.
     \end{block}
     \begin{block}{Решение}
-        \vspace{-0.15cm}
         Предлагается провести исследование
-        \vspace{-0.15cm}
         \begin{enumerate}
             \item Значений функции правдоподобия на бутстрапированных подвыборках;
             \item Расстояния между апостериорными распределениями параметров модели на схожих подвыборках.
@@ -48,51 +69,39 @@
 \end{frame}
 
 \begin{frame}{Постановка задачи определения достаточного размера выборки}
-    \begin{columns}[t]
-    \begin{column}{0.48\textwidth}
+    \vspace{-0.3cm}
+    \begin{block}{Выборка}
         \vspace{-0.5cm}
-        \begin{block}{Выборка}
-            \vspace{-0.7cm}
-            \[ \mathfrak{D}_m = \left\{ (\bx_i, y_i) \right\}, i \in \mathcal{I} = \{ 1, \ldots, m \} \]
-            \vspace{-1cm}
-            \begin{itemize}
-                \item $\bx \in \mathbb{X} \subseteq \mathbb{R}^n$~--- вектор признакового описания объекта;
-                \item $y \in \mathbb{Y}$~--- значение целевой переменной.
-            \end{itemize}
-        \end{block}
-        \begin{block}{Вероятностная модель}
-            \vspace{-0.7cm}
-            \[ p(y, \bw | \bx) = p(y | \bx, \bw) p(\bw): \mathbb{Y} \times \mathbb{W} \times \mathbb{X} \to \mathbb{R}^+ \]
-            \vspace{-1cm}
-            \begin{itemize}
-                \item $p(y | \bx, \bw)$~--- правдоподобие;
-                \item $p(\bw)$~--- априорное распределение.
-            \end{itemize}
-        \end{block}
-    \end{column}
-    \hspace{0.5cm}
-    \vrule
-    \hspace{0.5cm}
-    \begin{column}{0.48\textwidth}
-        \vspace{-0.5cm}
-        \begin{block}{Определение}
-            Размер выборки $m^*$ называется \underline{достаточным} согласно критерию $T$, если $T$ выполняется для всех $k \geqslant m^*$.
-        \end{block}
-        \vspace{0.5cm}
-        \begin{block}{Требуется}
-            \begin{itemize}
-                \item Предложить критерий $T$ определения достаточного размера выборки $m^*$;
-                \item Построить метод, реализующий критерий $T$ на практике.
-            \end{itemize}
-        \end{block}
-    \end{column}
-\end{columns}
+        \[ \mathfrak{D}_m = \left\{ (\bx_i, y_i) \right\}, i \in \mathcal{I} = \{ 1, \ldots, m \} \]
+        \vspace{-0.6cm}
+        \begin{itemize}
+            \item $\bx \in \mathbb{X} \subseteq \mathbb{R}^n$~--- вектор признакового описания объекта;
+            \item $y \in \mathbb{Y}$~--- значение целевой переменной.
+        \end{itemize}
+    \end{block}
+    \vspace{-0.3cm}
+    \begin{block}{Вероятностная модель}
+        \vspace{-0.4cm}
+        \[ p(y, \bw | \bx) = p(y | \bx, \bw) p(\bw): \mathbb{Y} \times \mathbb{W} \times \mathbb{X} \to \mathbb{R}^+ \]
+        \vspace{-0.6cm}
+        \begin{itemize}
+            \item $p(y | \bx, \bw)$~--- правдоподобие;
+            \item $p(\bw)$~--- априорное распределение.
+        \end{itemize}
+    \end{block}
+    \vspace{-0.3cm}
+    \begin{block}{Определение (Достаточный размер выборки)}
+        Размер выборки $m^*$ называется \underline{достаточным} согласно критерию $T$, если $T$ выполняется для всех $k \geqslant m^*$.
+    \end{block}
+    \begin{block}{Требуется}
+        Предложить критерий $T$ определения достаточного размера выборки.
+    \end{block}
 \end{frame}
 
 \begin{frame}{Анализ поведения функции правдоподобия}
     \begin{block}{Функция правдоподобия}
-        \vspace{-0.5cm}
-        \[ L(\mathfrak{D}_m, \mathbf{w}) = p(\by_m | \bX_m, \bw) = \prod_{i=1}^{m} p(y_i | \mathbf{x}_i, \mathbf{w}), \qquad l(\mathfrak{D}_m, \mathbf{w}) = \sum\limits_{i=1}^{m} \log p(y_i | \mathbf{x}_i, \mathbf{w}) \]
+        \vspace{-0.3cm}
+        \[ L(\mathfrak{D}_m, \mathbf{w}) = p(\by_m | \bX_m, \bw) = \prod_{i=1}^{m} p(y_i | \mathbf{x}_i, \mathbf{w}) \]
         \vspace{-0.5cm}
     \end{block}
     \begin{block}{Оценка максимума правдоподобия}
@@ -101,9 +110,11 @@
         \vspace{-0.5cm}
     \end{block}
     \begin{block}{Определение (\alert{D}-достаточный размер выборки)}
+        \vspace{-0.1cm}
         \[ \forall k \geqslant m^*: \alert{D}(k) = \mathbb{D}_{\hat{\mathbf{w}}_{k}} L(\mathfrak{D}_m, \hat{\mathbf{w}}_{k}) \leqslant \varepsilon \]
     \end{block}
     \begin{block}{Определение (\alert{M}-достаточный размер выборки)}
+        \vspace{-0.3cm}
         \[ \forall k \geqslant m^*: \alert{M}(k) = \left| \mathbb{E}_{\hat{\mathbf{w}}_{k+1}} L(\mathfrak{D}_m, \hat{\mathbf{w}}_{k+1}) - \mathbb{E}_{\hat{\mathbf{w}}_{k}} L(\mathfrak{D}_m, \hat{\mathbf{w}}_{k}) \right| \leqslant \varepsilon \]
     \end{block}
 \end{frame}
@@ -120,10 +131,9 @@
 \end{frame}
 
 \begin{frame}{Анализ апостериорного распределения параметров модели}
+    \vspace{-0.2cm}
     \begin{block}{Определение\footfullcite{MOTRENKO2014743} (Схожие подвыборки)}
-        \vspace{-0.2cm}
-        Рассмотрим две подвыборки $\mathfrak{D}^1 \subseteq \mathfrak{D}_m$ и $\mathfrak{D}^2 \subseteq \mathfrak{D}_m$. Пусть $\mathcal{I}_1 \subseteq \mathcal{I} = \{ 1, \ldots, m \}$ и $\mathcal{I}_2 \subseteq \mathcal{I} = \{ 1, \ldots, m \}$~--- соответствующие им подмножества индексов.\\
-        Подвыборки $\mathfrak{D}^1$ и $\mathfrak{D}^2$ называются \underline{схожими}, если $\left| \mathcal{I}_1 \triangle \mathcal{I}_2 \right| = 1$.
+        Подвыборки $\mathfrak{D}^1 \subseteq \mathfrak{D}_m$ и $\mathfrak{D}^2 \subseteq \mathfrak{D}_m$ называются \underline{схожими}, если $\left| \mathfrak{D}^1 \triangle \mathfrak{D}^2 \right| = 1$, то есть они отличаются на один объект.
         \vspace{-0.3cm}
     \end{block}
     \begin{block}{Апостериорные распределения на схожих подвыборках}
@@ -145,9 +155,11 @@
         \includesvg[width=0.9\textwidth]{posterior_ru}
     \end{figure}
     \begin{block}{Определение (\alert{KL}-достаточный размер выборки)}
+        \vspace{-0.4cm}
         \[ \forall k \geqslant m^*: \alert{KL}(k) = D_{KL}(p_k \| p_{k+1}) = \int p_k(\bw) \log{\dfrac{p_k(\bw)}{p_{k+1}(\bw)}} d\bw \leqslant \varepsilon \]
     \end{block} 
     \begin{block}{Определение (\alert{S}-достаточный размер выборки)}
+        \vspace{-0.1cm}
         \[ \forall k \geqslant m^*: \alert{S}(k) = \mathrm{s\text{-}score}(p_k, p_{k+1}) \geqslant 1-\varepsilon \]
     \end{block} 
 \end{frame}
@@ -175,23 +187,24 @@
         \vspace{-0.5cm}
     \end{block}
     \begin{block}{Теорема 4 (Киселев, 2024)}
-        Пусть множества значений признаков и целевой переменной ограничены, то есть $\exists M \in \mathbb{R}:$ $\| \bx \|_2 \leqslant M$ и $|y| \leqslant M$. Если  $\lambda_{\min}\left( \bX\T_k \bX_k \right) = \omega(\sqrt{k})$ при $k \to \infty$, то \underline{в модели линейной регрессии с нормальным априорным распределением параметров} $\| \bm_{k+1} - \bm_k \|_2 \to 0$ и  $\| \bSigma_{k+1} - \bSigma_k \|_{F} \to 0$ при $k \to \infty$.
+        Пусть множества значений признаков и целевой переменной ограничены, то есть $\exists M \in \mathbb{R}:$ $\| \bx \|_2 \leqslant M$ и $|y| \leqslant M$. Если  $\lambda_{\min}\left( \bX\T_k \bX_k \right) = \omega(\sqrt{k})$ при $k \to \infty$, то \underline{в модели линейной регрессии} \underline{с нормальным априорным распределением параметров} $\| \bm_{k+1} - \bm_k \|_2 \to 0$ и  $\| \bSigma_{k+1} - \bSigma_k \|_{F} \to 0$ при $k \to \infty$.
     \end{block}
 \end{frame}
 
 \begin{frame}{Близость полных байесовских прогнозов для линейной регрессии}
+    \vspace{-0.2cm}
     \begin{block}{Разделение на обучающую и тестовую выборки}
         \vspace{-0.3cm}
         \[ \mathfrak{D}_m = \mathfrak{D}_{m_1}^{\text{train}} \sqcup \mathfrak{D}_{m_2}^{\text{test}} \]
-        \vspace{-0.8cm}
+        \vspace{-0.6cm}
     \end{block}
     \begin{block}{Подвыборка обучающей выборки}
         \vspace{-0.3cm}
         \[ \left( \bX_k, \by_k \right) \subset \mathfrak{D}_{m_1}^{\text{train}} \]
-        \vspace{-0.8cm}
+        \vspace{-0.6cm}
     \end{block}
     \begin{block}{Теорема 5 (Киселев, 2024)}
-        Пусть множества значений признаков и целевой переменной ограничены, то есть $\exists M \in \mathbb{R}:$ $\| \bx \|_2 \leqslant M$ и $|y| \leqslant M$. Если  $\lambda_{\min}\left( \bX\T_k \bX_k \right) = \omega(\sqrt{k})$ при $k \to \infty$, то \underline{в модели линейной регрессии с нормальным априорным распределением параметров}\\
+        Пусть множества значений признаков и целевой переменной ограничены, то есть $\exists M \in \mathbb{R}:$ $\| \bx \|_2 \leqslant M$ и $|y| \leqslant M$. Если  $\lambda_{\min}\left( \bX\T_k \bX_k \right) = \omega(\sqrt{k})$ при $k \to \infty$, то \underline{в модели линейной регрессии} \underline{с нормальным априорным распределением параметров}\\
         \vspace{-0.3cm}
         \[ \left\|\mathbb{E}\left[ \mathbf{y}_{\mathrm{test}}|\mathbf{X_{\mathrm{test}}}, \mathbf{X}_{k+1}, \mathbf{y}_{k+1} \right] - \mathbb{E}\left[ \mathbf{y}_{\mathrm{test}}|\mathbf{X_{\mathrm{test}}}, \mathbf{X}_{k}, \mathbf{y}_{k} \right]\right\|_2 \to 0, \]
         \[ \left\|\mathbb{D}\left[ \mathbf{y}_{\mathrm{test}}|\mathbf{X_{\mathrm{test}}}, \mathbf{X}_{k+1}, \mathbf{y}_{k+1} \right] - \mathbb{D}\left[ \mathbf{y}_{\mathrm{test}}|\mathbf{X_{\mathrm{test}}}, \mathbf{X}_{k}, \mathbf{y}_{k} \right]\right\|_F \to 0, \]
@@ -212,22 +225,22 @@
     \begin{figure}
         \includegraphics[width=\textwidth]{sufficient-vs-threshold}
     \end{figure}
+    В синтетической регрессии D- и M-достаточность требуют больших значений $\varepsilon$. Тем не менее, сравнивать между собой подходы можно только попарно.
 \end{frame}
 
 \begin{frame}{Сравнение подходов на множестве выборок с задачей регрессии}
-    \vspace{-0.3cm}
+    \vspace{-0.2cm}
     Определяется размер выборки, при котором значение метрики уменьшается в 
-    \vspace{-0.25cm}
+    \vspace{-0.1cm}
     \begin{itemize}
         \item 1000 раз для D- и M-достаточного размера выборки;
         \item 2 раза для KL- и S-достаточного размера выборки.
     \end{itemize}
-    \vspace{-0.1cm}
-    Пропуски означают, что первоначальный размер выборки недостаточен.
-    \vspace{-0.3cm}
-    \scriptsize
+    Пропуски в таблице означают, что первоначальный размер выборки недостаточен.
+    
+    \tiny
     \begin{table}
-        \begin{tabular}{ccc|cc|cc}
+        \begin{tabular}{lcc|cc|cc}
         \toprule
         Название выборки & Объектов $m$ & Признаков $n$ & D & M & KL & S \\
         \midrule
@@ -247,37 +260,23 @@
         \bottomrule
         \end{tabular}
     \end{table}
+    
+    \normalsize При попарном сравнении M- и S-достаточные размеры выборки в среднем оказываются больше.
 \end{frame}
 
 \begin{frame}{Выносится на защиту}
     \begin{enumerate}
         \item Подходы к определению достаточного размера выборки по
-        \begin{itemize}
-            \item Сходимости функции правдоподобия на бутстрапированных подвыборках;
-            \item Близости апостериорных распределений параметров на схожих подвыборках;
-        \end{itemize}
-        \item Теоремы о корректности определений
-        \begin{itemize}
-            \item M-достаточного размера выборки в модели линейной регрессии;
-            \item KL-достаточного размера выборки в модели с нормальным апостериорным распределением параметров;
-            \item S-достаточного размера выборки в модели с нормальным апостериорным распределением параметров;
-        \end{itemize}
-        \item Теорема о близости моментов предельного апостериорного распределения в модели линейной регрессии с нормальным априорным распределением параметров;
-        \item Теорема о близости полных байесовских прогнозов в модели линейной регрессии с нормальным априорным распределением параметров.
+        значениям функции правдоподобия и близости апостериорных распределений; 
+        \item Теоремы о корректности предложенных определений;
+        \item Теоремы о близости моментов и полных байесовских прогнозов предельного апостериорного распределения.
     \end{enumerate}
-\end{frame}
-
-\begin{frame}[noframenumbering,plain]{Список работ автора по теме диплома}
-    \begin{block}{Публикации ВАК}
+    \begin{block}{Список работ автора по теме диплома}
         \begin{enumerate}
-            \item \textit{\textbf{N. Kiselev}, A. Grabovoy.} Sample Size Determination: Posterior Distributions Proximity // Computational Management Science (на рецензировании).
-        \end{enumerate}
-    \end{block}
-    \begin{block}{Выступления с докладом}
-        \begin{enumerate}
-            \item Определение достаточного размера выборки по апостериорному распределению параметров модели // 66-я Всероссийская научная конференция МФТИ, 2024.
+        \item \textbf{N.\,Kiselev}, A.\,Grabovoy. Sample Size Determination: Posterior Distributions Proximity // Computational Management Science (на рецензировании).
+        \item Определение достаточного размера выборки по апостериорному распределению параметров модели // 66-я Всероссийская научная конференция МФТИ, 2024.
         \end{enumerate}
     \end{block}
 \end{frame}
 
-\end{document}
+\end{document} 

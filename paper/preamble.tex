@@ -32,7 +32,11 @@
 \usepackage{icomma}
 
 \usepackage{hyperref}
-% \usepackage[usenames,dvipsnames,svgnames,table,rgb]{xcolor}
+\usepackage{xcolor}
+
+\definecolor{linkcolor}{rgb}{0.9,0,0}
+\definecolor{citecolor}{rgb}{0,0.6,0}
+\definecolor{urlcolor}{rgb}{0,0,1}
 
 \hypersetup{
 	unicode=true,
@@ -40,14 +44,10 @@
 	pdfauthor={Киселев Никита Сергеевич},
 	pdfkeywords={определение достаточного размера выборки, байесовский подход},
 	colorlinks=true,
-	linkcolor=black,        % внутренние ссылки
-	citecolor=blue,         % на библиографию
-	urlcolor=magenta           % на URL
+	linkcolor=linkcolor,        % внутренние ссылки
+	citecolor=citecolor,         % на библиографию
+	urlcolor=urlcolor           % на URL
 }
-
-\definecolor{linkcolor}{rgb}{0.9,0,0}
-\definecolor{citecolor}{rgb}{0,0.6,0}
-\definecolor{urlcolor}{rgb}{0,0,1}
 
 \graphicspath{{figs}}
 
